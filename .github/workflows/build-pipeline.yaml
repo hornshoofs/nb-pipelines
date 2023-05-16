@@ -36,7 +36,7 @@ jobs:
             {
               "id": "AP-Repository",
               "username": "~~~Client~~~",
-              "password": "${{ secrets.MULE_CA_CLIENTID }}~?~${{ secrets.MULE_CA_CLIENTSECRET }}"
+              "password": "${{ secrets.MULE_CA_CLIENTID_DEV }}~?~${{ secrets.MULE_CA_CLIENTSECRET_DEV }}"
 
             }
           ]
