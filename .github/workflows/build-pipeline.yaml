@@ -27,6 +27,12 @@ jobs:
       with:
         java-version: 1.8
 
+    #test
+    - name: Print org variables
+      run: |
+        echo ${{ vars.MULE_DEPLOYMENT_TARGET_DEV }}
+        echo ${{ vars.MULE_DEPLOYMENT_TARGET }}
+
     #create settings.xml file with the connected app credentials
     - name: Create settings.xml
       uses: s4u/maven-settings-action@v2.4.0
