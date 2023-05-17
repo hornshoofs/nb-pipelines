@@ -50,4 +50,18 @@ jobs:
     #build a jar file and publish it to Exchange
     - name: Publish to Exchange
       run: |
-        mvn clean deploy -DskipTests 
+        mvn clean deploy -DskipTests
+
+    - name: Deploy to CH2.0
+      run: |
+        mvn deploy -Pch20 -DskipTests -DmuleDeploy \
+          -DconnectedApp.clientId=${{ secrets.MULE_CA_CLIENTID_DEV }} \
+          -DconnectedApp.clientSecret=${{ secrets.MULE_CA_CLIENTSECRET_DEV }} \
+          -Dmule.env=${{ vars.MULE_ENV_DEV }} \
+          -Dprivate.space.name="${{ vars.MULE_DEPLOYMENT_TARGET_DEV }}" \
+          -Denvironment=${{ vars.MULE_AP_ENVIRONMENT_DEV }}\
+          -Dch2.replicas=${{ vars.MULE_DEPLOYMENT_REPLICAS_DEV }} \
+          -Dch2.vCores=${{ vars.MULE_CH2_VCORES_DEV }} \
+          -Dmule.encryption.key=${{ secrets.MULE_ENCRYPTION_KEY_DEV }} \
+          -Danypoint.client_id=${{ secrets.MULE_AP_CLIENTID_DEV }} \
+          -Danypoint.client_secret=${{ secrets.MULE_AP_CLIENTSECRET_DEV }} 
