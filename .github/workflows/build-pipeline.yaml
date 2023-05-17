@@ -7,8 +7,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    environment: dev
-
     steps:
     #checkout the source code from the git repo
     - uses: actions/checkout@v2
@@ -30,7 +28,6 @@ jobs:
     #test
     - name: Print org variables
       run: |
-        echo ${{ vars.MULE_DEPLOYMENT_TARGET_DEV }}
         echo ${{ vars.MULE_DEPLOYMENT_TARGET }}
 
     #create settings.xml file with the connected app credentials
@@ -42,7 +39,7 @@ jobs:
             {
               "id": "AP-Repository",
               "username": "~~~Client~~~",
-              "password": "${{ secrets.MULE_CA_CLIENTID_DEV }}~?~${{ secrets.MULE_CA_CLIENTSECRET_DEV }}"
+              "password": "${{ secrets.MULE_CA_CLIENTID }}~?~${{ secrets.MULE_CA_CLIENTSECRET }}"
 
             }
           ]
@@ -55,13 +52,13 @@ jobs:
     - name: Deploy to CH2.0
       run: |
         mvn deploy -Pch20 -DskipTests -DmuleDeploy \
-          -DconnectedApp.clientId=${{ secrets.MULE_CA_CLIENTID_DEV }} \
-          -DconnectedApp.clientSecret=${{ secrets.MULE_CA_CLIENTSECRET_DEV }} \
-          -Dmule.env=${{ vars.MULE_ENV_DEV }} \
-          -Dprivate.space.name="${{ vars.MULE_DEPLOYMENT_TARGET_DEV }}" \
-          -Denvironment=${{ vars.MULE_AP_ENVIRONMENT_DEV }}\
-          -Dch2.replicas=${{ vars.MULE_DEPLOYMENT_REPLICAS_DEV }} \
-          -Dch2.vCores=${{ vars.MULE_CH2_VCORES_DEV }} \
-          -Dmule.encryption.key=${{ secrets.MULE_ENCRYPTION_KEY_DEV }} \
-          -Danypoint.client_id=${{ secrets.MULE_AP_CLIENTID_DEV }} \
-          -Danypoint.client_secret=${{ secrets.MULE_AP_CLIENTSECRET_DEV }} 
+          -DconnectedApp.clientId=${{ secrets.MULE_CA_CLIENTID }} \
+          -DconnectedApp.clientSecret=${{ secrets.MULE_CA_CLIENTSECRET }} \
+          -Dmule.env=${{ vars.MULE_ENV }} \
+          -Dprivate.space.name="${{ vars.MULE_DEPLOYMENT_TARGET }}" \
+          -Denvironment=${{ vars.MULE_AP_ENVIRONMENT }}\
+          -Dch2.replicas=${{ vars.MULE_DEPLOYMENT_REPLICAS }} \
+          -Dch2.vCores=${{ vars.MULE_CH2_VCORES }} \
+          -Dmule.encryption.key=${{ secrets.MULE_ENCRYPTION_KEY }} \
+          -Danypoint.client_id=${{ secrets.MULE_AP_CLIENTID }} \
+          -Danypoint.client_secret=${{ secrets.MULE_AP_CLIENTSECRET }} 
